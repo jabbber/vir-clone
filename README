@@ -1,1 +1,8 @@
-This is a Command-line program to clone Virtual Machine
+vir-clone is a Command-line program to clone Virtual Machine.
+
+It is write in python2 and need a lib: libvirt-python
+
+This program can clone the Virtual Machine in a local host ,remote host,and between two hosts, even two remote host.
+
+Now it support these Virtual Hypervisor: KVM, XEN.
+The libvirtd must be runing on the Virtual Hypervisor host.
