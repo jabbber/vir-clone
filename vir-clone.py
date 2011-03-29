@@ -160,7 +160,25 @@ def main(iURI,oURI,VMName,PoolName,newVMName = '',dentify_key = ''):
 
     pool = oconn.storagePoolLookupByName(PoolName)
     if pool.isActive()==1:
-        pass
+        size = 0
+        for path in domaininfo.path_list:
+            try:
+                vol = iconn.storageVolLookupByPath(path)
+            except:
+                print "The Storage Volume is not in a Storage Pool,can no clone."
+                sys.exit(2)
+            xml = vol.XMLDesc(0)
+            temp = xml[xml.find('<capacity>')+10:]
+            temp = temp[:temp.find('</capacity>')]
+            size += int(temp)
+        xml = pool.XMLDesc(0)
+        temp = xml[xml.find('<available>')+11:]
+        temp = temp[:temp.find('</available')]
+        available = int(temp)
+        print available
+        if size > available:
+            print "The Storage Pool 's available is not enough to clone."
+            sys.exit(2)
     else:
         print "The Storage Pool is not Active,can not clone to it."
         sys.exit(2)
